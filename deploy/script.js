@@ -92,9 +92,21 @@ class App {
             this._loadMap([latitude, longitude]);
             this.#coords = [latitude, longitude];
         }
+        function getLocation() {
+            const text =
+                "cần quyền vị trí để sử dụng\nVui lòng truy cập đường dẫn sau\nchrome://settings/content/location\nnhấn OK để coppy đường dẫn";
+            if (confirm(text) == true) {
+                console.log("You pressed OK!");
+                navigator.clipboard.writeText(
+                    "chrome://settings/content/location"
+                );
+            } else {
+                this._getPosition();
+            }
+        }
         navigator.geolocation.getCurrentPosition(
             returnPosition.bind(this),
-            null,
+            getLocation.bind(this),
             {
                 enableHighAccuracy: true,
                 timeout: 5000,
